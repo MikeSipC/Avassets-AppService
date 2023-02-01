@@ -1,0 +1,60 @@
+steps:     
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet'
+      
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      command: 'restore'
+      restoreSolution: 'src/ExampleService.sln'
+      includeNuGetOrg: true
+        
+  - task: VSBuild@1
+    displayName: Build Avassets.ExampleService.Customer.Api.sln
+    inputs:
+      solution: 'src/ExampleService.sln'
+      msbuildArgs: '/m /t:build /p:DeployOnBuild=true /p:PublishProfile=CreatePackage'
+      platform: 'Any CPU'
+      configuration: 'Release'
+      maximumCpuCount: true
+      msbuildArchitecture: 'x64'
+
+  - powershell:   
+      Get-ChildItem -Path . -Recurse -Directory | Where-Object { $_.Name -like 'Publish.*'} | ForEach-Object {
+          $sourcePath = "$($_.FullName)\*";
+          $type=$_.Name -replace('Publish.','');
+          
+          $targetName = $null;
+          if($type -eq 'SQL'){
+              $targetName=(Get-ChildItem -Path $sourcePath -Recurse -Filter '*.dacpac').Name -replace('.dacpac','');
+          };
+          if($type -eq 'Web'){
+              $targetName=(Get-ChildItem -Path $sourcePath -Recurse -Filter '*.deploy.cmd').Name -replace('.deploy.cmd','');
+          };
+          if($type -eq 'Test') {
+            $targetName=(Get-ChildItem -Path $sourcePath -Recurse -Filter '*.*.*Tests.dll').Name -replace('.dll','');
+          };
+          if($type -eq 'Application'){
+            $targetName=(Get-ChildItem -Path $sourcePath -Recurse -Filter '*.*.*Application.dll').Name -replace('.dll','');
+          };
+          
+          if($targetName -ne $null) {
+            $targetPath="$(build.artifactstagingdirectory)\$type";
+            New-Item -Verbose -Path $targetPath -ItemType Directory -ErrorAction SilentlyContinue;
+            if($type -in 'Test','Application') {
+              Compress-Archive -Verbose -Path $sourcePath -DestinationPath "$targetPath\$targetName.zip" -CompressionLevel Fastest
+            } else {
+              $targetPath="$targetPath\$targetName";
+              New-Item -Verbose -Path $targetPath -ItemType Directory -ErrorAction SilentlyContinue;
+              Copy-Item -Verbose -Path $sourcePath -Destination $targetPath;
+            }
+          };
+      };
+    displayName: 'Copy Build artifacts'      
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Build Artifacts
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'

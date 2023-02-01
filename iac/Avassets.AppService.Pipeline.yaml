@@ -1,0 +1,46 @@
+variables:
+  serviceConnectionName: 'EnterpriseAvassets-D'
+
+pool:
+  vmImage: 'windows-latest'
+
+stages:
+  - stage: VALIDATE
+    displayName: VALIDATE
+    variables:
+    - group: DEVELOP
+    jobs:
+    - template: Validate.Job.yaml
+      parameters:
+        environment: DEVELOP
+    
+  - stage: BUILD
+    displayName: BUILD
+    dependsOn: VALIDATE
+    condition: succeeded()
+    jobs:
+    - template: Build.Job.yaml
+      parameters:
+        environment: DEVELOP
+    
+  - stage: DEVELOP
+    displayName: DEVELOP
+    dependsOn: BUILD 
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), startsWith(variables['Build.SourceBranch'], 'refs/heads/features/')))
+    variables:
+    - group: DEVELOP
+    jobs:
+    - template: Deploy.Job.yaml
+      parameters:
+        environment: DEVELOP
+        
+  - stage: PRODUCTION
+    displayName: PRODUCTION
+    dependsOn: BUILD
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    variables:
+    - group: PRODUCTION
+    jobs:
+    - template: Deploy.Job.yaml
+      parameters:
+        environment: PRODUCTION

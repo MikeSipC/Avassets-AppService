@@ -1,0 +1,35 @@
+parameters:
+- name: environment
+  type: string
+  
+jobs:
+- deployment: Deploy
+  pool:
+    vmImage: 'windows-2019'
+  environment: '${{ parameters.environment }}'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        
+        - task: CopyFiles@2
+          displayName: "Copy parameters"
+          inputs:
+            contents: 'iac/parameters/*.parameters.json'
+            targetFolder: $(Build.ArtifactStagingDirectory)/parametersFolder
+            flattenFolders: true
+            
+        - task: CopyFiles@2
+          displayName: "Copy templates"
+          inputs:
+            contents: 'iac/templates/*.template.json'
+            targetFolder: $(Build.ArtifactStagingDirectory)/templatesFolder
+            flattenFolders: true    
+                    
+        - template: Deploy.Steps.yaml
+          parameters:
+            resourceGroupName: '$(ResourceGroupName)' 
+            serviceConnectionName: '$(ServiceConnectionName)'
+            dtapName: '$(DtapName)'
+            aspSkuName: '$(AspSkuName)'

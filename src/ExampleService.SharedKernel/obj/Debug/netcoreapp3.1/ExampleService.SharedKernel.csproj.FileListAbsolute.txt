@@ -1,0 +1,10 @@
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.csproj.AssemblyReference.cache
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.AssemblyInfoInputs.cache
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.AssemblyInfo.cs
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.csproj.CoreCompileInputs.cache
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\bin\Debug\netcoreapp3.1\ExampleService.SharedKernel.deps.json
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\bin\Debug\netcoreapp3.1\ExampleService.SharedKernel.dll
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\bin\Debug\netcoreapp3.1\ExampleService.SharedKernel.pdb
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.dll
+C:\Repos\Avassets\Ava-AppService\src\ExampleService.SharedKernel\obj\Debug\netcoreapp3.1\ExampleService.SharedKernel.pdb

@@ -1,0 +1,25 @@
+parameters:
+  - name: resourceGroupName
+    type: string
+  - name: serviceConnectionName
+    type: string  
+  - name: dtapName
+    type: string
+  - name: aspSkuName
+    type: string
+
+steps:
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Validate ARM template: AppService.template.json"
+    inputs:
+      deploymentScope: "Resource Group"
+      azureResourceManagerConnection: "${{ parameters.serviceConnectionName }}"
+      resourceGroupName: "${{ parameters.resourceGroupName }}"
+      location: "West Europe"
+      csmFile: "iac/templates/AppService.template.json"
+      csmParametersFile: "iac/parameters/AppService.parameters.json"
+      overrideParameters: >-
+        -dtapName "${{ parameters.dtapName }}"
+        -aspSkuName "${{ parameters.aspSkuName }}"
+        -serviceName "ExampleService"
+      deploymentMode: "Validation"      

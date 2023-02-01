@@ -1,0 +1,21 @@
+parameters:
+- name: environment
+  type: string
+
+jobs:
+- deployment: Deploy
+  pool:
+    vmImage: 'windows-2019'
+  environment: '${{ parameters.environment }}'  
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+                    
+        - template: Validate.Steps.yaml
+          parameters:
+            resourceGroupName: '$(ResourceGroupName)' 
+            serviceConnectionName: '$(ServiceConnectionName)'
+            dtapName: '$(DtapName)'
+            aspSkuName: '$(AspSkuName)'

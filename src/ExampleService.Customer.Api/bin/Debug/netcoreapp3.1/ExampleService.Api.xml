@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleService.Customer.Api</name>
+    </assembly>
+    <members>
+        <member name="M:ExampleService.Customer.Api.Controllers.AddressController.#ctor(MediatR.IMediator,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{ExampleService.Customer.Api.Controllers.AddressController})">
+            <summary>
+            
+            </summary>
+            <param name="mediator"></param>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ExampleService.Customer.Api.Controllers.AddressController.GetAddressesByPostalCode(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="postalCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleService.Customer.Api.Controllers.CustomerController.#ctor(MediatR.IMediator,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{ExampleService.Customer.Api.Controllers.CustomerController})">
+            <summary>
+            
+            </summary>
+            <param name="mediator"></param>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ExampleService.Customer.Api.Controllers.CustomerController.GetCustomer(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleService.Customer.Api.Controllers.CustomerController.CreateCustomer(ExampleService.Customer.Api.Models.Requests.CreateCustomerRequestDto)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

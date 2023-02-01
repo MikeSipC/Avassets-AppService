@@ -1,0 +1,76 @@
+parameters:
+  - name: resourceGroupName
+    type: string
+  - name: serviceConnectionName
+    type: string
+  - name: dtapName
+    type: string
+  - name: aspSkuName
+    type: string
+
+steps:  
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Create AppServicePlan + AppService (infra/iac)"
+    inputs:
+      deploymentScope: "Resource Group"
+      azureResourceManagerConnection: "${{ parameters.serviceConnectionName }}"
+      resourceGroupName: "${{ parameters.resourceGroupName }}"
+      location: "West Europe"
+      templateLocation: "Linked artifact"
+      csmFile: "$(Build.ArtifactStagingDirectory)/templatesFolder/AppService.template.json"
+      csmParametersFile: "$(Build.ArtifactStagingDirectory)/parametersFolder/AppService.parameters.json"
+      overrideParameters: >-
+        -dtapName "${{ parameters.dtapName }}"
+        -aspSkuName "${{ parameters.aspSkuName }}"
+      deploymentMode: "Incremental"
+      deploymentOutputs: "ArmOutput"
+      
+  - task: PowerShell@2
+    displayName: "Set reusable template variables as pipeline variables"
+    inputs:
+      targetType: "inline"
+      script: |
+        $armOutput = '$(ArmOutput)' | ConvertFrom-Json
+        Write-Host "Setting pipeline variable 'appServiceName' with value '$($armOutput.appServiceName.value)'"
+        Write-Host "##vso[task.setvariable variable=appServiceName]$($armOutput.appServiceName.value)"    
+      
+  - task: AzureRMWebAppDeployment@4
+    displayName: Deploy ExampleService (content/src)
+    inputs:
+      ConnectionType: AzureRM
+      ConnectedServiceName: '${{ parameters.serviceConnectionName }}'
+      PublishProfilePath: "$(System.DefaultWorkingDirectory)/**/*.pubxml"
+      PublishProfilePassword: ''
+      WebAppKind: apiApp
+      WebAppName: "$(appServiceName)" # retrieved from template output variables
+      DeployToSlotOrASEFlag: 'false'
+      ResourceGroupName: ''
+      SlotName: production
+      DockerNamespace: ''
+      DockerRepository: ''
+      DockerImageTag: ''
+      VirtualApplication: ''
+      Package: "$(Pipeline.Workspace)/drop/Web/ExampleService.Customer.Api/ExampleService.Customer.Api.zip"
+      RuntimeStack: ''
+      RuntimeStackFunction: ''
+      StartupCommand: ''
+      ScriptType: ''
+      InlineScript: ":: You can provide your deployment commands here. One command per line."
+      ScriptPath: ''
+      WebConfigParameters: ''
+      # AppSettings: '-APPINSIGHTS_INSTRUMENTATIONKEY "${{ parameters.appInsightsInstrumentationKey }}"' # use this if you created AI and want to bind it to this
+      AppSettings: ''
+      ConfigurationSettings: ''
+      UseWebDeploy: 'false'
+      DeploymentType: webDeploy
+      TakeAppOfflineFlag: 'true'
+      SetParametersFile: ''
+      RemoveAdditionalFilesFlag: 'false'
+      ExcludeFilesFromAppDataFlag: 'true'
+      AdditionalArguments: "-retryAttempts:5 -retryInterval:5000"
+      RenameFilesFlag: 'true'
+      XmlTransformation: 'false'
+      XmlVariableSubstitution: 'false'
+      JSONFiles: ''    
+
+  

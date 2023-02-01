@@ -1,0 +1,16 @@
+parameters:
+- name: environment
+  type: string
+  
+jobs:
+- deployment: Deploy
+  pool:
+    vmImage: 'windows-2019'
+  environment: '${{ parameters.environment }}'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        
+        - template: Build.Steps.yaml

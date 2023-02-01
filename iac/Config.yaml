@@ -1,0 +1,4 @@
+variables:
+  - name: ConnectedServiceName
+    value: 'TODO-D'
+    readonly: true

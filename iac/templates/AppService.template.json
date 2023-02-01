@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dtapName": {
+      "type": "string",
+      "metadata": {
+        "description": "The code of the environment this resource will be used in"
+      },
+      "allowedValues": [
+        "D",
+        "T",
+        "A",
+        "P"
+      ]
+    },
+	"aspSkuName": {	
+      "type": "string"
+    },
+	"serviceName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "appServicePlan": "[toLower(concat('avassets-asp-', parameters('dtapName')))]",
+    "appService": "[toLower(concat('avassets-aps-', parameters('serviceName'), '-', parameters('dtapName')))]"
+  },
+  "resources": [
+   {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2018-02-01",
+      "name": "[variables('appServicePlan')]",
+      "location": "West Europe",
+      "sku": {
+        "name": "[parameters('aspSkuName')]"
+      },
+      "kind": "app",
+      "properties": {
+        "perSiteScaling": false,
+        "maximumElasticWorkerCount": 1,
+        "isSpot": false, 
+        "reserved": false,
+        "isXenon": false,
+        "hyperV": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0
+      },
+	  "resources": [
+	  {
+        "type": "Microsoft.Web/sites",
+        "apiVersion": "2020-06-01",
+        "name": "[variables('appService')]",
+		"dependsOn": [
+		  "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlan'))]"
+		],
+        "location": "West Europe",
+		"properties": {
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlan'))]"
+		}
+	  }
+	  ]
+    }
+  ],
+  "outputs": {
+    "appServiceName": {
+      "type": "string",
+      "value": "[variables('appService')]"
+    }
+  }
+}

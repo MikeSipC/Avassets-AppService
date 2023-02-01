@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.46" />
+  
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Commands\Auth\**" />
+    <Compile Remove="Commands\CacheData\**" />
+    <Compile Remove="Common\**" />
+    <Compile Remove="Queries\CacheData\**" />
+    <Compile Remove="Queries\Order\**" />
+    <Compile Remove="Queries\Vouchers\**" />
+    <EmbeddedResource Remove="Commands\Auth\**" />
+    <EmbeddedResource Remove="Commands\CacheData\**" />
+    <EmbeddedResource Remove="Common\**" />
+    <EmbeddedResource Remove="Queries\CacheData\**" />
+    <EmbeddedResource Remove="Queries\Order\**" />
+    <EmbeddedResource Remove="Queries\Vouchers\**" />
+    <None Remove="Commands\Auth\**" />
+    <None Remove="Commands\CacheData\**" />
+    <None Remove="Common\**" />
+    <None Remove="Queries\CacheData\**" />
+    <None Remove="Queries\Order\**" />
+    <None Remove="Queries\Vouchers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.1.3" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="MediatR" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="all" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.62" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\ExampleService.Core\ExampleService.Core.csproj" />
+    <ProjectReference Include="..\ExampleService.SharedKernel\ExampleService.SharedKernel.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Queries\Repository\Handlers\" />
+  </ItemGroup>
+</Project>

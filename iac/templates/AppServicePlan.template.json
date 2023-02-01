@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dtapName": {
+      "type": "string",
+      "metadata": {
+        "description": "The code of the environment this resource will be used in"
+      },
+      "allowedValues": [
+        "D",
+        "T",
+        "A",
+        "P"
+      ]
+    },
+	"aspSkuName": {	
+      "type": "string"
+    }
+  },
+  "variables": {
+    "appServicePlan": "[toLower(concat('avassets-asp-', parameters('dtapName')))]"
+  },
+   "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2018-02-01",
+      "name": "[variables('appServicePlan')]",
+      "location": "West Europe",
+      "sku": {
+        "name": "[parameters('aspSkuName')]"
+      },
+      "kind": "app",
+      "properties": {
+        "perSiteScaling": false,
+        "maximumElasticWorkerCount": 1,
+        "isSpot": false,
+        "reserved": false,
+        "isXenon": false,
+        "hyperV": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0
+      }
+    }
+  ],
+  "outputs": {
+    "appServicePlanName": {
+      "type": "string",
+      "value": "[variables('appServicePlan')]"
+    },
+	"appServicePlanId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlan'))]"
+	}
+  }
+}

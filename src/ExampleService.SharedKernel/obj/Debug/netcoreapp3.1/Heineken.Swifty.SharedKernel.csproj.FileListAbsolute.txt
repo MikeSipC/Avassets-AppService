@@ -1,0 +1,10 @@
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\bin\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.deps.json
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\bin\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.dll
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\bin\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.pdb
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.AssemblyInfoInputs.cache
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.AssemblyInfo.cs
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.csproj.CoreCompileInputs.cache
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.dll
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.pdb
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\Heineken\Swifty\payment-src\Heineken.Swifty.SharedKernel\obj\Debug\netcoreapp3.1\Heineken.Swifty.SharedKernel.csproj.AssemblyReference.cache
